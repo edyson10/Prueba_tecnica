@@ -34,6 +34,8 @@
                 android:hint="@string/username"
                 android:theme="@style/edit_text_white">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtUsername"
+                    android:text="admin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -44,12 +46,15 @@
                 android:hint="@string/password"
                 android:theme="@style/edit_text_white">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtPassword"
+                    android:text="1234"
+                    android:inputType="numberPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnLoginActivity"
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/login_button"

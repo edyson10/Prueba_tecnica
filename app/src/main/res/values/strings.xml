@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prueba_tecnica</string>
+    <string name="app_name">Prueba Tecnica</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -7,14 +7,19 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_customers">Clientes</string>
+    <string name="menu_employees">Empleados</string>
+    <string name="menu_sales">Ventas</string>
+    <string name="menu_fertilizer">Abonos</string>
+    <string name="menu_report">Reportes</string>
+    <string name="menu_info">Acerca</string>
 
     <string name="login_button">Iniciar sesión</string>
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
+    <string name="nombre">Nombre</string>
+    <string name="documento">Documento</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

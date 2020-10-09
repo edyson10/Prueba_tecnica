@@ -1,7 +1,17 @@
 package com.example.prueba_tecnica;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.prueba_tecnica.Fragments.AcercaFragment;
+import com.example.prueba_tecnica.Fragments.CustomersFragment;
+import com.example.prueba_tecnica.Fragments.EmployeesFragment;
+import com.example.prueba_tecnica.Fragments.FertilizerFragment;
+import com.example.prueba_tecnica.Fragments.ReportFragment;
+import com.example.prueba_tecnica.Fragments.SalesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,11 +28,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CustomersFragment.OnFragmentInteractionListener,
+        EmployeesFragment.OnFragmentInteractionListener, SalesFragment.OnFragmentInteractionListener,
+        FertilizerFragment.OnFragmentInteractionListener, ReportFragment.OnFragmentInteractionListener,
+        AcercaFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,31 +45,22 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        Fragment fragment = new CustomersFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.content_main, fragment).commit();
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        alertOneButton();
     }
 
     @Override
@@ -66,13 +72,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.logout) {
+            alertOneButton();
             return true;
         }
 
@@ -84,23 +86,61 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment miFragment = null;
+        boolean fragmentSeleccionado = false;
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_customers) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            miFragment = new CustomersFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_employees) {
+            miFragment = new EmployeesFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_sales) {
+            miFragment = new SalesFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_fertilizer) {
+            miFragment = new FertilizerFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_report) {
+            miFragment = new ReportFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_info) {
+            miFragment = new AcercaFragment();
+            fragmentSeleccionado = true;
+        }
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (fragmentSeleccionado){
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main, miFragment).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void alertOneButton() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setIcon(R.drawable.online_shop)
+                .setTitle("Sesión")
+                .setMessage("¿Desea cerrar sesión?")
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "Se ha cerrado sesión", Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
